@@ -14,4 +14,5 @@ public class User
     public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<BlogPost> BlogPosts { get; set; } = new List<BlogPost>();
+    public ICollection<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
 }

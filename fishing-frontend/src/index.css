@@ -17,12 +17,23 @@ button, .btn, .nav-link, select { cursor: pointer !important; }
   select,
   input,
   textarea {
-    @apply rounded-xl border border-white/10 bg-surface-900/60 text-slate-100 shadow-inner shadow-black/20;
-    @apply outline-none ring-brand-500/30 focus:border-brand-500/50 focus:ring-2;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: rgb(241 245 249);
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.20);
+    background-color: rgba(15, 23, 42, 0.6);
+    outline: none;
+  }
+
+  select:focus,
+  input:focus,
+  textarea:focus {
+    border-color: rgba(34, 211, 238, 0.35);
+    box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.18);
   }
 
   select {
-    @apply cursor-pointer;
+    cursor: pointer;
     color-scheme: dark;
   }
 
@@ -34,33 +45,141 @@ button, .btn, .nav-link, select { cursor: pointer !important; }
 
 @layer components {
   .ui-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200;
-    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, opacity 200ms ease;
     white-space: nowrap;
   }
 
+  .ui-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   .btn-primary {
-    @apply ui-btn-primary px-5 py-2.5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    background-color: rgb(37 99 235);
+    color: rgb(255 255 255);
+    box-shadow: 0 12px 24px rgba(30, 64, 175, 0.30);
+    transition: background-color 200ms ease, opacity 200ms ease;
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(59 130 246);
+  }
+
+  .btn-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   .btn-secondary {
-    @apply ui-btn-outline px-5 py-2.5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgb(255 255 255);
+    transition: background-color 200ms ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.10);
   }
 
   .ui-btn-primary {
-    @apply ui-btn bg-brand-600 text-white shadow-lg shadow-brand-900/30 hover:bg-brand-500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: rgb(37 99 235);
+    color: rgb(255 255 255);
+    box-shadow: 0 12px 24px rgba(30, 64, 175, 0.30);
+    transition: background-color 200ms ease, opacity 200ms ease;
+  }
+
+  .ui-btn-primary:hover {
+    background-color: rgb(59 130 246);
   }
 
   .ui-btn-outline {
-    @apply ui-btn border border-white/20 bg-white/5 text-white hover:bg-white/10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgb(255 255 255);
+    transition: background-color 200ms ease, opacity 200ms ease;
+  }
+
+  .ui-btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.10);
   }
 
   .ui-btn-ghost {
-    @apply ui-btn text-white/80 hover:text-white hover:bg-white/5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.80);
+    background-color: transparent;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  .ui-btn-ghost:hover {
+    color: rgb(255 255 255);
+    background-color: rgba(255, 255, 255, 0.05);
   }
 
   .ui-btn-danger {
-    @apply ui-btn border border-red-500/30 bg-red-500/10 text-red-100 hover:border-red-400/50 hover:bg-red-500/15;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid rgba(239, 68, 68, 0.30);
+    background-color: rgba(239, 68, 68, 0.10);
+    color: rgb(254 226 226);
+    transition: background-color 200ms ease, border-color 200ms ease;
+  }
+
+  .ui-btn-danger:hover {
+    border-color: rgba(248, 113, 113, 0.50);
+    background-color: rgba(239, 68, 68, 0.15);
   }
 }
 

@@ -4,6 +4,7 @@ using FishingECommerce.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishingECommerce.API.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260330180843_UpdateDatabaseSchema")]
+    partial class UpdateDatabaseSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,97 +82,6 @@ namespace FishingECommerce.API.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("CartItems", (string)null);
-                });
-
-            modelBuilder.Entity("FishingECommerce.API.Entities.EventRegistration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FishingEventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FishingEventId");
-
-                    b.HasIndex("UserId", "FishingEventId")
-                        .IsUnique();
-
-                    b.ToTable("EventRegistrations", (string)null);
-                });
-
-            modelBuilder.Entity("FishingECommerce.API.Entities.FishingEvent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<string>("FullDescription")
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<decimal>("GuideRating")
-                        .HasPrecision(3, 2)
-                        .HasColumnType("decimal(3,2)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("Nights")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OccupiedSeats")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("nvarchar(32)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Location");
-
-                    b.HasIndex("Type");
-
-                    b.ToTable("FishingEvents", (string)null);
                 });
 
             modelBuilder.Entity("FishingECommerce.API.Entities.FishingLocation", b =>
@@ -532,25 +444,6 @@ namespace FishingECommerce.API.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FishingECommerce.API.Entities.EventRegistration", b =>
-                {
-                    b.HasOne("FishingECommerce.API.Entities.FishingEvent", "FishingEvent")
-                        .WithMany("Registrations")
-                        .HasForeignKey("FishingEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FishingECommerce.API.Entities.User", "User")
-                        .WithMany("EventRegistrations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FishingEvent");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("FishingECommerce.API.Entities.FishingLocation", b =>
                 {
                     b.HasOne("FishingECommerce.API.Entities.User", "CreatedByUser")
@@ -631,11 +524,6 @@ namespace FishingECommerce.API.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FishingECommerce.API.Entities.FishingEvent", b =>
-                {
-                    b.Navigation("Registrations");
-                });
-
             modelBuilder.Entity("FishingECommerce.API.Entities.Order", b =>
                 {
                     b.Navigation("Items");
@@ -653,8 +541,6 @@ namespace FishingECommerce.API.Data.Migrations
                     b.Navigation("BlogPosts");
 
                     b.Navigation("CartItems");
-
-                    b.Navigation("EventRegistrations");
 
                     b.Navigation("Orders");
 

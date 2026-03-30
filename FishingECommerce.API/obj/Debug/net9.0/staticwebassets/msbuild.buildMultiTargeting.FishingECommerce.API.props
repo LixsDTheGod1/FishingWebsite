@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\FishingECommerce.API.props" />
-</Project>

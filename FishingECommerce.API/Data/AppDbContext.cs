@@ -18,6 +18,8 @@ public class AppDbContext : DbContext
     public DbSet<Review> Reviews => Set<Review>();
     public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
     public DbSet<FishingLocation> FishingLocations => Set<FishingLocation>();
+    public DbSet<FishingEvent> FishingEvents => Set<FishingEvent>();
+    public DbSet<EventRegistration> EventRegistrations => Set<EventRegistration>();
     public DbSet<Promotion> Promotions => Set<Promotion>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
@@ -117,6 +119,37 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(l => l.CreatedByUserId)
                 .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        modelBuilder.Entity<FishingEvent>(e =>
+        {
+            e.ToTable("FishingEvents");
+            e.Property(x => x.Title).HasMaxLength(256);
+            e.Property(x => x.Description).HasMaxLength(4000);
+            e.Property(x => x.FullDescription).HasMaxLength(4000);
+            e.Property(x => x.ImageUrl).HasMaxLength(2048);
+            e.Property(x => x.Location).HasMaxLength(256);
+            e.Property(x => x.TotalPrice).HasPrecision(18, 2);
+            e.Property(x => x.GuideRating).HasPrecision(3, 2);
+            e.Property(x => x.Type).HasConversion<string>().HasMaxLength(32);
+            e.HasIndex(x => x.Type);
+            e.HasIndex(x => x.Location);
+        });
+
+        modelBuilder.Entity<EventRegistration>(e =>
+        {
+            e.ToTable("EventRegistrations");
+            e.HasIndex(x => new { x.UserId, x.FishingEventId }).IsUnique();
+
+            e.HasOne(x => x.User)
+                .WithMany(u => u.EventRegistrations)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            e.HasOne(x => x.FishingEvent)
+                .WithMany(ev => ev.Registrations)
+                .HasForeignKey(x => x.FishingEventId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Promotion>(e =>

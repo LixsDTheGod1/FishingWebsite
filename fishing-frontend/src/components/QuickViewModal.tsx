@@ -86,11 +86,11 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                 </button>
 
                 {/* Снимка */}
-                <div className="w-full md:w-1/2 h-[300px] md:h-auto bg-slate-800">
+                <div className="w-full md:w-1/2 h-[300px] md:h-auto bg-[#0b1b33]">
                     <img
                         src={currentProduct.image}
                         alt={currentProduct.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                     />
                 </div>
 
@@ -168,7 +168,7 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                                         onClick={() => setCurrentProduct(p)}
                                         className="cursor-pointer flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 hover:opacity-90 hover:scale-[1.02] transition-all border border-white/5 text-left"
                                     >
-                                        <img src={p.image} className="w-12 h-12 rounded-lg object-cover" />
+                                        <img src={p.image} className="w-12 h-12 rounded-lg object-contain bg-[#0b1b33]" />
                                         <div className="min-w-0">
                                             <p className="text-sm font-bold text-white truncate">{p.name}</p>
                                             <p className="text-xs text-turquoise">{p.price.toFixed(2)} лв.</p>

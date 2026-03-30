@@ -17,6 +17,13 @@ public class UserPublicDTO
     public string UserName { get; set; } = string.Empty;
 }
 
+public sealed class EventParticipantDTO
+{
+    public int RegistrationId { get; set; }
+    public int UserId { get; set; }
+    public string UserName { get; set; } = string.Empty;
+}
+
 public class UpdateUserRequest
 {
     [Required, MinLength(2), MaxLength(128)]

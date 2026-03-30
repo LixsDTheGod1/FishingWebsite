@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Backend + Frontend",
+    "Projects": [
+      {
+        "Path": "FishingECommerce.API\\FishingECommerce.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "fishing-frontend\\fishing-frontend.esproj",
+        "Action": "StartWithoutDebugging"
+      }
+    ]
+  }
+]

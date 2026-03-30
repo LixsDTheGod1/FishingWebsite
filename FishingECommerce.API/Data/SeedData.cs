@@ -398,5 +398,75 @@ public static class SeedData
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        var desiredEvents = new List<FishingEvent>
+        {
+            new()
+            {
+                Title = "Експрес: Жребчево – уикенд риболов",
+                Description = "Присъединете се към нас за един незабравим уикенд на яз. Жребчево. Ще ловим предимно щука на жива стръв и спининг. Осигурени са лодка и спални чували.",
+                FullDescription = "Присъединете се към нас за един незабравим уикенд на яз. Жребчево. Ще ловим предимно щука на жива стръв и спининг. Осигурени са лодка и спални чували.",
+                Type = FishingEventType.Express,
+                Nights = 1,
+                Location = "Жребчево",
+                TotalPrice = 199.00m,
+                Capacity = 10,
+                OccupiedSeats = 0,
+                GuideRating = 4.7m,
+            },
+            new()
+            {
+                Title = "Приключение: яз. Ивайловград – риболовен тур",
+                Description = "Двудневен риболовен тур на яз. Ивайловград с лодка и опитен водач. Ще търсим бяла риба и костур по заливите с джиг и воблери. Включени са нощувки, транспорт и базова екипировка.",
+                FullDescription = "Двудневен риболовен тур на яз. Ивайловград с лодка и опитен водач. Ще търсим бяла риба и костур по заливите с джиг и воблери. Включени са нощувки, транспорт и базова екипировка.",
+                Type = FishingEventType.Adventure,
+                Nights = 2,
+                Location = "яз. Ивайловград",
+                TotalPrice = 399.00m,
+                Capacity = 12,
+                OccupiedSeats = 0,
+                GuideRating = 4.9m,
+            },
+            new()
+            {
+                Title = "Експрес: яз. Батак – почти пълно (тест)",
+                Description = "Кратък експрес пакет за яз. Батак с ограничени места. Подходящ за стегнат уикенд риболов и бърза смяна на тактики според условията. Носете си лични такъми и подходяща храна.",
+                FullDescription = "Кратък експрес пакет за яз. Батак с ограничени места. Подходящ за стегнат уикенд риболов и бърза смяна на тактики според условията. Носете си лични такъми и подходяща храна.",
+                Type = FishingEventType.Express,
+                Nights = 1,
+                Location = "яз. Батак",
+                TotalPrice = 249.00m,
+                Capacity = 10,
+                OccupiedSeats = 9,
+                GuideRating = 4.5m,
+            },
+        };
+
+        var desiredEventTitles = desiredEvents.Select(e => e.Title).ToList();
+        var existingEvents = await db.FishingEvents
+            .Where(e => desiredEventTitles.Contains(e.Title))
+            .ToDictionaryAsync(e => e.Title, cancellationToken);
+
+        foreach (var seed in desiredEvents)
+        {
+            if (existingEvents.TryGetValue(seed.Title, out var current))
+            {
+                current.Type = seed.Type;
+                current.Nights = seed.Nights;
+                current.Location = seed.Location;
+                current.TotalPrice = seed.TotalPrice;
+                current.Capacity = seed.Capacity;
+                current.OccupiedSeats = seed.OccupiedSeats;
+                current.GuideRating = seed.GuideRating;
+                current.Description = seed.Description;
+                current.FullDescription = seed.FullDescription;
+            }
+            else
+            {
+                db.FishingEvents.Add(seed);
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
     }
 }

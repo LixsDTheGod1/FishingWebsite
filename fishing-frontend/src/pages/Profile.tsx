@@ -5,6 +5,9 @@ import type { OrderDTO, UserDTO } from '../api/types'
 import { formatDate } from '../utils/format'
 import { formatCurrency } from '../utils/format'
 import { fetchMyOrders } from '../api/ordersApi'
+import { fetchMyRegistrations } from '../api/eventsApi'
+import type { MyEventRegistrationDTO } from '../api/types'
+import { QRCodeCanvas } from 'qrcode.react'
 
 export default function Profile() {
   const { t, i18n } = useTranslation()
@@ -15,6 +18,10 @@ export default function Profile() {
   const [orders, setOrders] = useState<OrderDTO[]>([])
   const [ordersLoading, setOrdersLoading] = useState(false)
   const [ordersError, setOrdersError] = useState<string | null>(null)
+
+  const [registrations, setRegistrations] = useState<MyEventRegistrationDTO[]>([])
+  const [eventsLoading, setEventsLoading] = useState(false)
+  const [eventsError, setEventsError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -37,6 +44,19 @@ export default function Profile() {
               }
             } finally {
               if (!cancelled) setOrdersLoading(false)
+            }
+
+            setEventsLoading(true)
+            setEventsError(null)
+            try {
+              const list = await fetchMyRegistrations()
+              if (!cancelled) setRegistrations(list)
+            } catch (e) {
+              if (!cancelled) {
+                setEventsError(e instanceof Error ? e.message : 'Could not load events.')
+              }
+            } finally {
+              if (!cancelled) setEventsLoading(false)
             }
           }
         }
@@ -169,6 +189,103 @@ export default function Profile() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {user && (
+        <div className="mt-8 rounded-2xl border border-white/10 bg-surface-800/50 p-6 sm:p-8">
+          <h2 className="font-display text-2xl font-bold text-white">Моите събития</h2>
+          <p className="mt-2 text-sm text-slate-400">Списък със записванията ви за риболовни събития.</p>
+
+          {eventsLoading && (
+            <p className="mt-6 text-slate-400" role="status">
+              Зареждане…
+            </p>
+          )}
+
+          {eventsError && (
+            <p className="mt-6 text-sm text-red-300">{eventsError}</p>
+          )}
+
+          {!eventsLoading && !eventsError && registrations.length === 0 && (
+            <div className="mt-6 rounded-xl border border-dashed border-white/15 bg-surface-800/40 p-6 text-center">
+              <p className="text-slate-400">Нямате записвания за събития.</p>
+            </div>
+          )}
+
+          <div className="mt-6 space-y-4">
+            {registrations.map((r) => {
+              const e = r.event
+
+              const payload = JSON.stringify({
+                registrationId: r.registrationId,
+                eventTitle: e.title,
+                userId: user?.id,
+                userName: user?.userName,
+              })
+
+              const onDownload = () => {
+                const canvas = document.getElementById(`qr-profile-${r.registrationId}`) as HTMLCanvasElement | null
+                if (!canvas) return
+
+                const url = canvas.toDataURL('image/png')
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `ticket-${r.registrationId}.png`
+                document.body.appendChild(a)
+                a.click()
+                a.remove()
+              }
+
+              return (
+                <div key={r.registrationId} className="rounded-2xl border border-white/10 bg-surface-900/40 p-5">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="min-w-0">
+                      <p className="text-sm text-slate-400">{e.type === 'Express' ? 'Експрес' : 'Приключение'}</p>
+                      <p className="mt-1 font-display text-lg font-bold text-white">{e.title}</p>
+                      <p className="mt-1 text-sm text-slate-400">
+                        {e.location} · {e.nights} нощувки · Водач {e.guideRating.toFixed(1)} / 5
+                      </p>
+                      <p className="mt-2 text-xs text-white/60">Регистрация #{r.registrationId}</p>
+                    </div>
+
+                    <div className="text-left sm:text-right">
+                      <p className="text-xs uppercase tracking-wider text-slate-500">Места</p>
+                      <p className="mt-1 text-sm font-bold text-white">
+                        {Math.max(0, e.remainingSeats)} от {e.capacity}
+                      </p>
+                      <p className="mt-2 text-sm font-semibold text-brand-300">
+                        {formatCurrency(e.totalPrice, i18n.language)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 sm:flex-row">
+                    <div className="rounded-2xl border border-white/10 bg-surface-900/40 p-3">
+                      <QRCodeCanvas
+                        id={`qr-profile-${r.registrationId}`}
+                        value={payload}
+                        size={156}
+                        bgColor="#0b1220"
+                        fgColor="#e5e7eb"
+                        includeMargin
+                      />
+                    </div>
+
+                    <div className="flex w-full flex-col gap-3 sm:w-auto sm:items-end">
+                      <button
+                        type="button"
+                        onClick={onDownload}
+                        className="h-11 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm font-bold text-white hover:bg-white/10 sm:w-auto"
+                      >
+                        Свали билет
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       )}

@@ -64,6 +64,12 @@ export default function Header({ onCartClick }: Props) {
           <NavLink to="/blog" className={navClass}>
             {t('nav.blog')}
           </NavLink>
+          <NavLink to="/events" className={navClass}>
+            Събития
+          </NavLink>
+          <NavLink to="/about" className={navClass}>
+            За нас
+          </NavLink>
           {user ? (
             <button
               type="button"
@@ -256,6 +262,12 @@ export default function Header({ onCartClick }: Props) {
             </NavLink>
             <NavLink to="/blog" className={navClass} onClick={() => setOpen(false)}>
               {t('nav.blog')}
+            </NavLink>
+            <NavLink to="/events" className={navClass} onClick={() => setOpen(false)}>
+              Събития
+            </NavLink>
+            <NavLink to="/about" className={navClass} onClick={() => setOpen(false)}>
+              За нас
             </NavLink>
             {user ? (
               <button

@@ -107,11 +107,11 @@ export default function ProductPage() {
       </nav>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-800/40">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b1b33] max-h-[500px] aspect-square">
           <img
             src={product.image}
             alt=""
-            className="aspect-square w-full object-cover"
+            className="h-full w-full object-contain"
           />
         </div>
         <div>

@@ -128,6 +128,16 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/events" className="hover:text-turquoise transition-colors duration-300">
+                  Събития
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-turquoise transition-colors duration-300">
+                  За нас
+                </Link>
+              </li>
+              <li>
                 <Link to="/cart" className="hover:text-turquoise transition-colors duration-300">
                   Количка
                 </Link>

@@ -7,7 +7,7 @@ export default function AdminPanel() {
   const { t } = useTranslation()
   const { user, loading } = useAuth()
   const navigate = useNavigate()
-  const [active, setActive] = useState<'products' | 'orders' | null>(null)
+  const [active, setActive] = useState<'products' | 'orders' | 'events' | null>(null)
 
   useEffect(() => {
     if (active === 'products') {
@@ -15,6 +15,9 @@ export default function AdminPanel() {
     }
     if (active === 'orders') {
       navigate('/admin/orders')
+    }
+    if (active === 'events') {
+      navigate('/admin/events')
     }
   }, [active, navigate])
 
@@ -73,6 +76,10 @@ export default function AdminPanel() {
           title: t('admin.cards.orders'),
         },
         {
+          key: 'events',
+          title: 'Събития',
+        },
+        {
           key: 'posts',
           title: t('admin.cards.posts'),
         },
@@ -91,10 +98,12 @@ export default function AdminPanel() {
             onClick={() => {
               if (item.key === 'products') setActive('products')
               if (item.key === 'orders') setActive('orders')
+              if (item.key === 'events') setActive('events')
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && item.key === 'products') setActive('products')
               if (e.key === 'Enter' && item.key === 'orders') setActive('orders')
+              if (e.key === 'Enter' && item.key === 'events') setActive('events')
             }}
             className="cursor-pointer rounded-2xl border border-dashed border-white/20 bg-surface-800/40 p-6 text-center transition hover:border-brand-500/40 hover:bg-white/5"
           >
@@ -104,6 +113,8 @@ export default function AdminPanel() {
                 ? 'Управление на продукти'
                 : item.key === 'orders'
                   ? 'Всички поръчки'
+                  : item.key === 'events'
+                    ? 'Управление на събития'
                   : t('admin.coming')}
             </p>
           </div>

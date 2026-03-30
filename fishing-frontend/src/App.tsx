@@ -13,7 +13,10 @@ import RegisterPage from './pages/RegisterPage'
 import CheckoutPage from './pages/CheckoutPage'
 import AdminProductsPage from './pages/AdminProductsPage'
 import AdminOrdersPage from './pages/AdminOrdersPage'
-import WishlistPage from './pages/WishlistPage'
+import WishlistPage from './pages/WishlistPage.tsx'
+import AboutPage from './pages/AboutPage'
+import EventsPage from './pages/EventsPage'
+import AdminEventsPage from './pages/AdminEventsPage'
 
 export default function App() {
   return (
@@ -32,8 +35,11 @@ export default function App() {
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/admin/products" element={<AdminProductsPage />} />
         <Route path="/admin/orders" element={<AdminOrdersPage />} />
+        <Route path="/admin/events" element={<AdminEventsPage />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/events" element={<EventsPage />} />
       </Route>
     </Routes>
   )
