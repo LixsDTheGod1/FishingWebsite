@@ -53,8 +53,12 @@ export default function RegisterPage() {
     setSubmitting(true)
     try {
       await register(email.trim(), userName.trim(), password)
-      await refresh()
-      navigate('/')
+      const me = await refresh()
+      if (!me) {
+        setError('Регистрацията беше успешна, но профилът не можа да се зареди. Моля, опитайте да влезете.')
+        return
+      }
+      navigate('/profile')
     } catch (err) {
       setError(toBgAuthError(err))
     } finally {
@@ -115,7 +119,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-900/30 transition hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-70"
+              className="ui-btn-primary mt-2 w-full"
             >
               {submitting ? 'Създаване…' : 'Регистрация'}
             </button>

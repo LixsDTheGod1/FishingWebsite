@@ -71,7 +71,7 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
 
             {/* Modal Content */}
             <div
-                className="relative bg-slate-900 w-full max-w-5xl max-h-[90vh] flex flex-col md:flex-row overflow-hidden rounded-2xl shadow-2xl border border-white/10"
+                className="relative bg-slate-900 w-full max-w-5xl max-h-[90vh] flex flex-col md:flex-row overflow-hidden overflow-x-hidden rounded-2xl shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close button */}
@@ -95,7 +95,7 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                 </div>
 
                 {/* Инфо */}
-                <div className="w-full md:w-1/2 p-6 md:p-10 overflow-y-auto">
+                <div className="w-full md:w-1/2 p-6 md:p-10 overflow-y-auto overflow-x-hidden">
                     <span className="inline-block px-3 py-1 text-xs font-semibold text-turquoise bg-turquoise/10 rounded-full mb-4">
                         {currentProduct.category}
                     </span>
@@ -111,12 +111,13 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                         </span>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 mb-8">
+                    <div className="mb-8 flex w-full max-w-full flex-row flex-wrap items-center gap-[12px]">
                         <button
                             type="button"
                             onClick={handleAddToCart}
                             disabled={currentProduct.stockQuantity <= 0}
-                            className="cursor-pointer flex h-12 items-center justify-center rounded-xl bg-turquoise px-8 py-3 font-bold text-slate-950 transition-all hover:bg-turquoise/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="ui-btn cursor-pointer h-12 bg-turquoise font-bold text-slate-950 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 whitespace-nowrap text-[0.9rem]"
+                            style={{ padding: '12px 24px', width: 'auto' }}
                         >
                             Добави в кошницата
                         </button>
@@ -124,12 +125,13 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                             type="button"
                             onClick={() => toggle(currentProduct)}
                             className={[
-                                'cursor-pointer flex h-12 items-center justify-center gap-2 rounded-xl border border-white/15 px-8 py-3 font-bold transition-all hover:bg-white/10',
+                                'ui-btn cursor-pointer h-12 flex items-center justify-center gap-2 border border-white/15 bg-white/5 font-bold text-white hover:bg-white/10 whitespace-nowrap text-[0.9rem] leading-none',
                                 has(currentProduct.id) ? 'text-turquoise' : 'text-white',
                             ].join(' ')}
+                            style={{ padding: '12px 24px', width: 'auto' }}
                         >
                             <svg
-                                className="h-5 w-5"
+                                className="h-5 w-5 shrink-0"
                                 viewBox="0 0 24 24"
                                 fill={has(currentProduct.id) ? 'currentColor' : 'none'}
                                 stroke="currentColor"
@@ -145,7 +147,8 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                         <Link
                             to={`/product/${currentProduct.id}`}
                             onClick={onClose}
-                            className="cursor-pointer flex h-12 items-center justify-center rounded-xl bg-slate-800 px-8 py-3 font-bold text-white transition-all hover:bg-slate-700"
+                            className="ui-btn cursor-pointer h-12 border border-white/15 bg-white/5 font-bold text-white hover:bg-white/10 whitespace-nowrap text-[0.9rem]"
+                            style={{ padding: '12px 24px', width: 'auto' }}
                         >
                             Виж детайли
                         </Link>

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useCart } from '../hooks/useCart'
 import { formatCurrency } from '../utils/format'
@@ -13,36 +12,7 @@ export default function Cart({ variant = 'summary' }: Props) {
   const { items, subtotal, totalItems, setQuantity, removeItem, clear } = useCart()
   const { t, i18n } = useTranslation()
 
-  const PROMO_CODES = useMemo(
-    () => ({
-      SD10: 0.1,
-      SD20: 0.2,
-    }),
-    [],
-  )
-
-  const [promoInput, setPromoInput] = useState('')
-  const [promo, setPromo] = useState<{ code: string; percent: number } | null>(null)
-  const [promoMsg, setPromoMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(
-    null,
-  )
-
-  const discount = promo ? subtotal * promo.percent : 0
-  const total = subtotal - discount
-
-  const applyPromo = () => {
-    const code = promoInput.trim().toUpperCase()
-    const percent = (PROMO_CODES as Record<string, number>)[code]
-
-    if (!percent) {
-      setPromo(null)
-      setPromoMsg({ type: 'error', text: 'Невалиден код' })
-      return
-    }
-
-    setPromo({ code, percent })
-    setPromoMsg({ type: 'success', text: 'Кодът е приложен успешно!' })
-  }
+  const total = subtotal
 
   if (items.length === 0) {
     return (
@@ -81,7 +51,7 @@ export default function Cart({ variant = 'summary' }: Props) {
           <button
             type="button"
             onClick={() => clear()}
-            className="text-xs font-medium text-slate-400 underline-offset-2 hover:text-amber-300 hover:underline"
+            className="ui-btn-ghost px-4 py-2 text-sm"
           >
             {t('cart.clear')}
           </button>
@@ -119,7 +89,7 @@ export default function Cart({ variant = 'summary' }: Props) {
                 <button
                   type="button"
                   onClick={() => removeItem(line.id)}
-                  className="text-xs text-slate-500 hover:text-red-400"
+                  className="ui-btn-danger px-4 py-2 text-sm"
                 >
                   {t('cart.remove')}
                 </button>
@@ -133,36 +103,6 @@ export default function Cart({ variant = 'summary' }: Props) {
       </ul>
 
       <div className="mt-4 border-t border-white/10 pt-4">
-        {variant === 'full' && (
-          <div className="mb-4 rounded-xl border border-white/10 bg-slate-800/60 p-4">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <input
-                value={promoInput}
-                onChange={(e) => setPromoInput(e.target.value)}
-                placeholder="Промо код"
-                className="w-full flex-1 rounded-lg border border-white/10 bg-slate-800 px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-turquoise/30"
-              />
-              <button
-                type="button"
-                onClick={applyPromo}
-                className="cursor-pointer rounded-lg bg-turquoise px-4 py-2 text-sm font-bold text-slate-950 hover:opacity-90"
-              >
-                Приложи
-              </button>
-            </div>
-            {promoMsg && (
-              <p
-                className={[
-                  'mt-2 text-sm font-semibold',
-                  promoMsg.type === 'success' ? 'text-emerald-400' : 'text-red-400',
-                ].join(' ')}
-              >
-                {promoMsg.text}
-              </p>
-            )}
-          </div>
-        )}
-
         <div className="space-y-2 text-sm">
           <div className="flex justify-between text-slate-400">
             <span>{t('cart.subtotal')}</span>
@@ -170,14 +110,6 @@ export default function Cart({ variant = 'summary' }: Props) {
               {formatCurrency(subtotal, i18n.language)}
             </span>
           </div>
-          {promo && (
-            <div className="flex justify-between text-slate-400">
-              <span className="text-turquoise">Отстъпка ({promo.code})</span>
-              <span className="font-semibold text-turquoise">
-                -{formatCurrency(discount, i18n.language)}
-              </span>
-            </div>
-          )}
           <div className="flex justify-between text-slate-400">
             <span>Общо</span>
             <span className="font-semibold text-white">
@@ -188,7 +120,7 @@ export default function Cart({ variant = 'summary' }: Props) {
         {variant === 'summary' && (
           <Link
             to="/cart"
-            className="mt-4 block w-full rounded-lg bg-brand-600 py-2.5 text-center text-sm font-semibold text-white hover:bg-brand-500"
+            className="ui-btn-primary mt-4 block w-full text-center"
           >
             {t('cart.view')}
           </Link>

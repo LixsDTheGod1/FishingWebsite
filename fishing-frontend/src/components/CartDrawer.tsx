@@ -51,11 +51,12 @@ export default function CartDrawer({ open, onClose }: Props) {
         </div>
 
         <div className="border-t border-white/10 p-5">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="flex items-center justify-between gap-3">
             <Link
               to="/cart"
               onClick={onClose}
-              className="inline-flex items-center justify-center rounded-xl border border-white/20 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/5"
+              className="ui-btn-outline whitespace-nowrap"
+              style={{ width: '48%', padding: '10px' }}
             >
               {t('cart.view')}
             </Link>
@@ -64,9 +65,10 @@ export default function CartDrawer({ open, onClose }: Props) {
               onClick={onClose}
               className={
                 items.length === 0
-                  ? 'inline-flex cursor-not-allowed items-center justify-center rounded-xl bg-amber-400/40 px-4 py-2.5 text-sm font-bold text-slate-950/60'
-                  : 'inline-flex items-center justify-center rounded-xl bg-amber-400 px-4 py-2.5 text-sm font-bold text-slate-950 hover:brightness-110'
+                  ? 'ui-btn cursor-not-allowed bg-[#00bcd4]/30 font-bold text-white/60 whitespace-nowrap'
+                  : 'ui-btn bg-[#00bcd4] font-bold text-white hover:opacity-90 whitespace-nowrap'
               }
+              style={{ width: '48%', padding: '10px' }}
               aria-disabled={items.length === 0}
               tabIndex={items.length === 0 ? -1 : 0}
             >

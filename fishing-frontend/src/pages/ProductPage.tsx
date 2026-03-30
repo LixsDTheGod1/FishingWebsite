@@ -14,6 +14,9 @@ export default function ProductPage() {
   const { addItem } = useCart()
   const productId = Number(id)
 
+  const [addHover, setAddHover] = useState(false)
+  const [viewHover, setViewHover] = useState(false)
+
   const [product, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -133,7 +136,7 @@ export default function ProductPage() {
                 : t('product.out_of_stock')}
             </span>
           </div>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-[15px]">
             <button
               type="button"
               disabled={product.stockQuantity <= 0}
@@ -145,13 +148,51 @@ export default function ProductPage() {
                   image: product.image,
                 })
               }
-              className="cursor-pointer inline-flex items-center justify-center rounded-xl border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+              onMouseEnter={() => setAddHover(true)}
+              onMouseLeave={() => setAddHover(false)}
+              style={{
+                backgroundColor: addHover ? '#00a7bf' : '#00bcd4',
+                color: '#ffffff',
+                padding: '12px 24px',
+                borderRadius: '14px',
+                border: '1px solid transparent',
+                cursor: product.stockQuantity <= 0 ? 'not-allowed' : 'pointer',
+                position: 'relative',
+                zIndex: 10,
+                fontWeight: 700,
+                transition: 'background-color 150ms ease, opacity 150ms ease',
+                opacity: product.stockQuantity <= 0 ? 0.6 : 1,
+                whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+              }}
             >
               {t('product.add')}
             </button>
             <Link
               to="/cart"
-              className="cursor-pointer inline-flex items-center justify-center rounded-xl border border-white/20 px-8 py-3.5 text-sm font-semibold text-white hover:bg-white/5"
+              onMouseEnter={() => setViewHover(true)}
+              onMouseLeave={() => setViewHover(false)}
+              style={{
+                backgroundColor: viewHover ? 'rgba(255,255,255,0.10)' : 'transparent',
+                color: '#ffffff',
+                padding: '12px 24px',
+                borderRadius: '14px',
+                border: '1px solid rgba(255,255,255,0.85)',
+                cursor: 'pointer',
+                position: 'relative',
+                zIndex: 10,
+                fontWeight: 700,
+                transition: 'background-color 150ms ease, border-color 150ms ease',
+                whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                textDecoration: 'none',
+              }}
             >
               {t('product.view_cart')}
             </Link>

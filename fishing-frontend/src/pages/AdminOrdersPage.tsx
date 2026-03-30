@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthProvider'
 import { fetchAllOrders } from '../api/ordersApi'
 import type { OrderDTO } from '../api/types'
@@ -53,8 +53,19 @@ export default function AdminOrdersPage() {
     )
   }
 
-  if (!user) return <Navigate to="/login" replace />
-  if (user.role !== 'Admin') return <Navigate to="/" replace />
+  if (!user || user.role !== 'Admin') {
+    return (
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <nav className="text-sm text-slate-500">
+          <Link to="/" className="hover:text-brand-300">Начало</Link>
+          <span className="mx-2">/</span>
+          <span className="text-slate-300">Админ</span>
+        </nav>
+        <h1 className="mt-3 font-display text-3xl font-bold text-white">Поръчки</h1>
+        <p className="mt-2 text-slate-400">Нямате достъп до тази страница (изисква Admin).</p>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">

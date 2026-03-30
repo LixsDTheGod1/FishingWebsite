@@ -131,6 +131,30 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(p => p.ProductId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            e.HasData(
+                new Promotion
+                {
+                    Id = 1,
+                    Name = "SD10",
+                    Description = "10% отстъпка",
+                    DiscountType = "Percentage",
+                    Value = 10m,
+                    StartsAtUtc = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndsAtUtc = new DateTime(2036, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    ProductId = null,
+                },
+                new Promotion
+                {
+                    Id = 2,
+                    Name = "SD20",
+                    Description = "20% отстъпка",
+                    DiscountType = "Percentage",
+                    Value = 20m,
+                    StartsAtUtc = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    EndsAtUtc = new DateTime(2036, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                    ProductId = null,
+                });
         });
 
         modelBuilder.Entity<RefreshToken>(e =>

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthProvider'
 import { useEffect, useState } from 'react'
 
@@ -27,11 +27,34 @@ export default function AdminPanel() {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />
+    return (
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <h1 className="font-display text-3xl font-bold text-white">{t('admin.title')}</h1>
+        <p className="mt-3 text-slate-400">Трябва да сте влезли, за да достъпите админ панела.</p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <Link to="/login" className="rounded-xl bg-brand-600 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-500">
+            Вход
+          </Link>
+          <Link to="/" className="rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/5">
+            Начало
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   if (user.role !== 'Admin') {
-    return <Navigate to="/" replace />
+    return (
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <h1 className="font-display text-3xl font-bold text-white">{t('admin.title')}</h1>
+        <p className="mt-3 text-slate-400">Нямате права за админ панела.</p>
+        <div className="mt-6">
+          <Link to="/" className="rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/5">
+            Начало
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (

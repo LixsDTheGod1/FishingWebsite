@@ -2,13 +2,13 @@ import type { ReactNode } from 'react'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { fetchCurrentUser } from '../api/usersApi'
 import { getAccessToken } from '../api/http'
-import { logoutSingleSession } from '../api/authApi'
+import { clearAuth, logoutSingleSession } from '../api/authApi'
 import type { UserDTO } from '../api/types'
 
 type AuthContextValue = {
   user: UserDTO | null
   loading: boolean
-  refresh: () => Promise<void>
+  refresh: () => Promise<UserDTO | null>
   logout: () => Promise<void>
 }
 
@@ -22,11 +22,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const token = getAccessToken()
     if (!token) {
       setUser(null)
-      return
+      return null
     }
 
-    const me = await fetchCurrentUser()
-    setUser(me)
+    try {
+      const me = await fetchCurrentUser()
+      if (!me) {
+        clearAuth()
+        setUser(null)
+        return null
+      }
+      setUser(me)
+      return me
+    } catch {
+      clearAuth()
+      setUser(null)
+      return null
+    }
   }, [])
 
   const logout = useCallback(async () => {

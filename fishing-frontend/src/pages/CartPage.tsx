@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Cart from '../components/Cart'
 
 export default function CartPage() {
   const { t } = useTranslation()
+  const [checkoutHover, setCheckoutHover] = useState(false)
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -21,7 +23,20 @@ export default function CartPage() {
         </Link>
         <Link
           to="/checkout"
-          className="rounded-xl bg-amber-400 px-6 py-3 text-center text-sm font-bold text-slate-900 hover:brightness-110"
+          onMouseEnter={() => setCheckoutHover(true)}
+          onMouseLeave={() => setCheckoutHover(false)}
+          style={{
+            backgroundColor: checkoutHover ? '#00a7bf' : '#00bcd4',
+            color: '#ffffff',
+            padding: '15px',
+            borderRadius: '8px',
+            border: '1px solid transparent',
+            cursor: 'pointer',
+            fontWeight: 800,
+            transition: 'background-color 150ms ease, opacity 150ms ease',
+            whiteSpace: 'nowrap',
+            textAlign: 'center',
+          }}
         >
           Завърши поръчката
         </Link>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ProductCard from '../components/ProductCard'
@@ -15,6 +15,22 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'name'>('name')
+  const [sortOpen, setSortOpen] = useState(false)
+  const sortWrapRef = useRef<HTMLDivElement | null>(null)
+
+  const sortOptions = useMemo(
+    () =>
+      [
+        { value: 'name' as const, label: 'Име' },
+        { value: 'price-asc' as const, label: 'Цена (ниска → висока)' },
+        { value: 'price-desc' as const, label: 'Цена (висока → ниска)' },
+      ],
+    [],
+  )
+
+  const sortLabel = useMemo(() => {
+    return sortOptions.find((x) => x.value === sortBy)?.label ?? 'Име'
+  }, [sortBy, sortOptions])
 
   const categoryParam = searchParams.get('category')
   const selectedCategory = useMemo(() => {
@@ -86,6 +102,27 @@ export default function Home() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!sortOpen) return
+
+    const onDown = (e: MouseEvent) => {
+      if (!sortWrapRef.current) return
+      if (sortWrapRef.current.contains(e.target as Node)) return
+      setSortOpen(false)
+    }
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSortOpen(false)
+    }
+
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [sortOpen])
+
   return (
     <div className="animate-fade-in-up">
       <section className="relative overflow-hidden border-b border-white/10 glass-dark">
@@ -154,33 +191,61 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <label className="text-sm font-medium text-white/70">
               Подредба:
             </label>
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as 'price-asc' | 'price-desc' | 'name')}
-                className="appearance-none rounded-lg border border-white/10 bg-[#0B1120] px-8 py-2 pr-10 text-sm text-white outline-none focus:border-turquoise/50 cursor-pointer hover:border-white/20 transition-colors duration-300"
+            <div className="relative" ref={sortWrapRef}>
+              <button
+                type="button"
+                onClick={() => setSortOpen((x) => !x)}
+                className="h-[44px] w-[240px] max-w-full rounded-xl border border-white/10 bg-surface-800/60 px-4 pr-10 text-left text-sm font-medium text-white shadow-inner shadow-black/20 outline-none ring-brand-500/30 transition hover:border-white/20 focus:border-brand-500/50 focus:ring-2"
+                aria-haspopup="listbox"
+                aria-expanded={sortOpen}
               >
-                <option value="name" className="bg-[#0B1120] text-white">Име</option>
-                <option value="price-asc" className="bg-[#0B1120] text-white">Цена (ниска → висока)</option>
-                <option value="price-desc" className="bg-[#0B1120] text-white">Цена (висока → ниска)</option>
-              </select>
+                {sortLabel}
+              </button>
+
               <svg
-                className="absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-turquoise pointer-events-none"
+                className={[
+                  'pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/70 transition-transform',
+                  sortOpen ? 'rotate-180' : '',
+                ].join(' ')}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
+
+              {sortOpen && (
+                <ul
+                  role="listbox"
+                  aria-label="Подредба"
+                  className="absolute right-0 top-[calc(100%+5px)] z-50 w-full overflow-hidden rounded-xl border border-white/10 bg-[#0b1120] shadow-2xl shadow-black/70"
+                >
+                  {sortOptions.map((opt) => (
+                    <li key={opt.value} role="option" aria-selected={opt.value === sortBy}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSortBy(opt.value)
+                          setSortOpen(false)
+                        }}
+                        className={[
+                          'block w-full px-4 py-3 text-left text-sm text-white transition-colors',
+                          opt.value === sortBy
+                            ? 'bg-[#00bcd4]/15 text-white'
+                            : 'hover:bg-white/15',
+                        ].join(' ')}
+                      >
+                        {opt.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
 

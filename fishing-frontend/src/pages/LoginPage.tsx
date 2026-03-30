@@ -50,8 +50,12 @@ export default function LoginPage() {
     setSubmitting(true)
     try {
       await login(email.trim(), password)
-      await refresh()
-      navigate(from ?? '/')
+      const me = await refresh()
+      if (!me) {
+        setError('Входът беше успешен, но профилът не можа да се зареди. Моля, опитайте отново.')
+        return
+      }
+      navigate(from ?? '/profile')
     } catch (err) {
       setError(toBgAuthError(err))
     } finally {
@@ -102,7 +106,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-900/30 transition hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-70"
+              className="ui-btn-primary mt-2 w-full"
             >
               {submitting ? 'Влизане…' : 'Вход'}
             </button>

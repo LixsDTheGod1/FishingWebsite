@@ -91,26 +91,30 @@ export default function Header({ onCartClick }: Props) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden md:flex items-center rounded-full border border-white/10 bg-white/5 p-1">
             <button
               type="button"
               onClick={() => setLanguage('bg')}
-              className={
+              className={[
+                'px-3 py-1 text-xs font-semibold rounded-full transition-colors',
                 i18n.language === 'bg'
-                  ? 'px-3 py-1 text-xs font-semibold text-white'
-                  : 'px-3 py-1 text-xs font-medium text-white/60 hover:text-white transition-colors duration-300'
-              }
+                  ? 'bg-white/10 text-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/5',
+              ].join(' ')}
+              aria-pressed={i18n.language === 'bg'}
             >
               BG
             </button>
             <button
               type="button"
               onClick={() => setLanguage('en')}
-              className={
+              className={[
+                'px-3 py-1 text-xs font-semibold rounded-full transition-colors',
                 i18n.language === 'en'
-                  ? 'px-3 py-1 text-xs font-semibold text-white'
-                  : 'px-3 py-1 text-xs font-medium text-white/60 hover:text-white transition-colors duration-300'
-              }
+                  ? 'bg-white/10 text-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/5',
+              ].join(' ')}
+              aria-pressed={i18n.language === 'en'}
             >
               EN
             </button>

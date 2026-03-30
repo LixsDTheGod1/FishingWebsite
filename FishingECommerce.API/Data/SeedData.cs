@@ -350,5 +350,53 @@ public static class SeedData
         }
 
         await db.SaveChangesAsync(cancellationToken);
+
+        var desiredPromotions = new List<Promotion>
+        {
+            new()
+            {
+                Name = "SD10",
+                Description = "10% отстъпка",
+                DiscountType = "Percentage",
+                Value = 10m,
+                StartsAtUtc = now.AddYears(-1),
+                EndsAtUtc = now.AddYears(10),
+                ProductId = null,
+            },
+            new()
+            {
+                Name = "SD20",
+                Description = "20% отстъпка",
+                DiscountType = "Percentage",
+                Value = 20m,
+                StartsAtUtc = now.AddYears(-1),
+                EndsAtUtc = now.AddYears(10),
+                ProductId = null,
+            },
+        };
+
+        var desiredPromotionNames = desiredPromotions.Select(p => p.Name).ToList();
+        var existingPromotions = await db.Promotions
+            .Where(p => desiredPromotionNames.Contains(p.Name))
+            .ToDictionaryAsync(p => p.Name, cancellationToken);
+
+        foreach (var seed in desiredPromotions)
+        {
+            if (existingPromotions.TryGetValue(seed.Name, out var current))
+            {
+                current.Description = seed.Description;
+                current.DiscountType = seed.DiscountType;
+                current.Value = seed.Value;
+                current.StartsAtUtc = seed.StartsAtUtc;
+                current.EndsAtUtc = seed.EndsAtUtc;
+                current.ProductId = seed.ProductId;
+            }
+            else
+            {
+                db.Promotions.Add(seed);
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
     }
 }
