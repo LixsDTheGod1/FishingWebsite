@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\isash\\source\\repos\\FishingWebsite\\fishing-frontend\\src\\components\\QuickViewModal.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:fishing-frontend\\src\\components\\QuickViewModal.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{582BBF08-3A32-4024-AD59-51DD900D858D}|FishingECommerce.API\\FishingECommerce.API.csproj|c:\\users\\isash\\source\\repos\\fishingwebsite\\fishingecommerce.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{582BBF08-3A32-4024-AD59-51DD900D858D}|FishingECommerce.API\\FishingECommerce.API.csproj|solutionrelative:fishingecommerce.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{582BBF08-3A32-4024-AD59-51DD900D858D}|FishingECommerce.API\\FishingECommerce.API.csproj|c:\\users\\isash\\source\\repos\\fishingwebsite\\fishingecommerce.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{582BBF08-3A32-4024-AD59-51DD900D858D}|FishingECommerce.API\\FishingECommerce.API.csproj|solutionrelative:fishingecommerce.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "QuickViewModal.tsx",
+              "DocumentMoniker": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\fishing-frontend\\src\\components\\QuickViewModal.tsx",
+              "RelativeDocumentMoniker": "fishing-frontend\\src\\components\\QuickViewModal.tsx",
+              "ToolTip": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\fishing-frontend\\src\\components\\QuickViewModal.tsx",
+              "RelativeToolTip": "fishing-frontend\\src\\components\\QuickViewModal.tsx",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAkwJ8AAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-03-29T19:44:35.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\FishingECommerce.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "FishingECommerce.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\FishingECommerce.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "FishingECommerce.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-29T12:50:06.245Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\FishingECommerce.API\\Program.cs",
+              "RelativeDocumentMoniker": "FishingECommerce.API\\Program.cs",
+              "ToolTip": "C:\\Users\\isash\\source\\repos\\FishingWebsite\\FishingECommerce.API\\Program.cs",
+              "RelativeToolTip": "FishingECommerce.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T12:16:07.995Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

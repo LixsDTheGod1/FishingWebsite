@@ -1,0 +1,40 @@
+@FishingECommerce.API_HostAddress = http://localhost:5252
+@accessToken = your_jwt_here
+@refreshToken = your_refresh_token_here
+
+### Register
+POST {{FishingECommerce.API_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "userName": "angler1",
+  "password": "secret12"
+}
+
+### Login
+POST {{FishingECommerce.API_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "secret12"
+}
+
+### Logout (all refresh sessions for user)
+POST {{FishingECommerce.API_HostAddress}}/api/auth/logout
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+### Logout (single refresh token)
+POST {{FishingECommerce.API_HostAddress}}/api/auth/logout
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+###

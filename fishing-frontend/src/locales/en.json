@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "map": "Map",
+    "blog": "Blog",
+    "profile": "Profile",
+    "admin": "Admin"
+  },
+  "cart": {
+    "title": "Shopping cart",
+    "review": "Review items before checkout.",
+    "empty": "Your cart is empty.",
+    "browse": "Browse products",
+    "clear": "Clear all",
+    "remove": "Remove",
+    "qty": "Quantity",
+    "subtotal": "Subtotal",
+    "view": "View cart",
+    "continue": "← Continue shopping",
+    "checkout_demo": "Checkout (demo)",
+    "checkout_demo_title": "Connect checkout in a later step",
+    "each": "each"
+  },
+  "home": {
+    "kicker": "Fresh gear · Fair prices",
+    "title_prefix": "Everything you need for the",
+    "title_highlight": "perfect catch",
+    "desc": "Rods, reels, line, and tackle curated for river, lake, and coast. Built for anglers who fish often and pack light.",
+    "shop": "Shop collection",
+    "read_blog": "Read the blog",
+    "featured": "Featured products",
+    "loaded": "Loaded from the FishingECommerce API.",
+    "go_cart": "Go to cart →",
+    "loading": "Loading products…",
+    "no_products": "No products in the database yet. POST to",
+    "or": "or use Swagger/OpenAPI to add items."
+  },
+  "product": {
+    "loading": "Loading product…",
+    "invalid_id": "Invalid product id.",
+    "not_found": "Product not found",
+    "back": "← Back",
+    "in_stock": "{{count}} in stock",
+    "out_of_stock": "Out of stock",
+    "add": "Add to cart",
+    "view_cart": "View cart"
+  },
+  "profile": {
+    "title": "Profile",
+    "loaded": "Loaded from GET /api/Users/me.",
+    "signin_hint": "Sign in via POST /api/Auth/login to see your account here.",
+    "guest": "Guest",
+    "not_signed": "Not signed in",
+    "user_id": "User ID",
+    "member_since": "Member since"
+  },
+  "admin": {
+    "title": "Admin panel",
+    "desc": "Placeholder for product management, orders, and blog moderation. Wire this to your ASP.NET Core API when roles are ready.",
+    "coming": "Coming soon",
+    "cards": {
+      "products": "Products",
+      "orders": "Orders",
+      "posts": "Blog posts",
+      "users": "Users",
+      "analytics": "Analytics"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Published posts from the API.",
+    "loading": "Loading posts…",
+    "post_loading": "Loading post…",
+    "post_not_found": "Post not found",
+    "post_invalid_id": "Invalid post id.",
+    "no_posts": "No published posts yet. Create one via",
+    "jwt_required": "(JWT required).",
+    "read_more": "Read more →",
+    "by": "By"
+  },
+  "locations": {
+    "title": "Fishing locations",
+    "subtitle": "Interactive map powered by OpenStreetMap.",
+    "loaded": "Loaded from GET /api/Locations",
+    "loading": "Loading locations…",
+    "none": "No locations yet. Create one via",
+    "region": "Region",
+    "type": "Type"
+  },
+  "footer": {
+    "tagline": "Premium rods, reels, and tackle for serious anglers. Responsive support and fast shipping across the region.",
+    "shop": "Shop",
+    "all_products": "All products",
+    "account": "Account",
+    "admin": "Admin panel",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "demo": "Demo storefront."
+  },
+  "common": {
+    "error_products": "Could not load products. Is the API running?",
+    "error_product": "Could not load product. Is the API running?",
+    "error_blog": "Could not load blog posts. Is the API running?",
+    "error_profile": "Could not load profile.",
+    "error_locations": "Could not load locations. Is the API running?"
+  }
+}

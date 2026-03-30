@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-midnight: #020617;
+  --color-turquoise: #06b6d4;
+  --color-turquoise-light: #22d3ee;
+  --color-surface: #0f172a;
+  --color-surface-light: #1e293b;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  background: var(--color-midnight);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Subtle animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Refined glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Clean gradients */
+.gradient-turquoise {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+}
+
+.gradient-turquoise-hover {
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+}
+
+/* Color utilities */
+.bg-turquoise {
+  background-color: #06b6d4;
+}
+
+.text-turquoise {
+  color: #06b6d4;
+}
+
+.text-midnight {
+  color: #020617;
+}
