@@ -100,7 +100,7 @@ export default function Home() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [t])
 
   useEffect(() => {
     if (!sortOpen) return

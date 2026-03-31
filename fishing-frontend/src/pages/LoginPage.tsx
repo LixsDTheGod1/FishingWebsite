@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { login } from '../api/authApi'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
 
 function toBgAuthError(e: unknown): string {
   if (axios.isAxiosError(e)) {

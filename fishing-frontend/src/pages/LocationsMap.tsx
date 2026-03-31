@@ -168,7 +168,7 @@ export default function LocationsMap() {
           setLocations(data.length > 0 ? data : FALLBACK_LOCATIONS)
           setError(null)
         }
-      } catch (e) {
+      } catch {
         if (!cancelled) {
           setLocations(FALLBACK_LOCATIONS)
           setError(null)

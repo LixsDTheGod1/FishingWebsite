@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
 import { useEffect, useState } from 'react'
 
 export default function AdminPanel() {
@@ -70,55 +70,69 @@ export default function AdminPanel() {
         {[{
           key: 'products',
           title: t('admin.cards.products'),
+          desc: 'Управление на продукти',
+          enabled: true,
+          onSelect: () => setActive('products'),
         },
         {
           key: 'orders',
           title: t('admin.cards.orders'),
+          desc: 'Всички поръчки',
+          enabled: true,
+          onSelect: () => setActive('orders'),
         },
         {
           key: 'events',
           title: 'Събития',
+          desc: 'Управление на събития',
+          enabled: true,
+          onSelect: () => setActive('events'),
         },
         {
           key: 'posts',
           title: t('admin.cards.posts'),
+          desc: t('admin.coming'),
+          enabled: false,
+          onSelect: () => {},
         },
         {
           key: 'users',
           title: t('admin.cards.users'),
+          desc: t('admin.coming'),
+          enabled: false,
+          onSelect: () => {},
         },
         {
           key: 'analytics',
           title: t('admin.cards.analytics'),
-        }].map((item) => (
-          <div
-            key={item.key}
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              if (item.key === 'products') setActive('products')
-              if (item.key === 'orders') setActive('orders')
-              if (item.key === 'events') setActive('events')
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && item.key === 'products') setActive('products')
-              if (e.key === 'Enter' && item.key === 'orders') setActive('orders')
-              if (e.key === 'Enter' && item.key === 'events') setActive('events')
-            }}
-            className="cursor-pointer rounded-2xl border border-dashed border-white/20 bg-surface-800/40 p-6 text-center transition hover:border-brand-500/40 hover:bg-white/5"
-          >
-            <p className="font-display font-semibold text-white">{item.title}</p>
-            <p className="mt-2 text-xs text-slate-500">
-              {item.key === 'products'
-                ? 'Управление на продукти'
-                : item.key === 'orders'
-                  ? 'Всички поръчки'
-                  : item.key === 'events'
-                    ? 'Управление на събития'
-                  : t('admin.coming')}
-            </p>
-          </div>
-        ))}
+          desc: t('admin.coming'),
+          enabled: false,
+          onSelect: () => {},
+        }].map((item) =>
+          item.enabled ? (
+            <div
+              key={item.key}
+              role="button"
+              tabIndex={0}
+              onClick={item.onSelect}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') item.onSelect()
+              }}
+              className="cursor-pointer rounded-2xl border border-dashed border-white/20 bg-surface-800/40 p-6 text-center transition hover:border-brand-500/40 hover:bg-white/5"
+            >
+              <p className="font-display font-semibold text-white">{item.title}</p>
+              <p className="mt-2 text-xs text-slate-500">{item.desc}</p>
+            </div>
+          ) : (
+            <div
+              key={item.key}
+              className="select-none rounded-2xl border border-dashed border-white/10 bg-surface-800/20 p-6 text-center opacity-60"
+            >
+              <p className="font-display font-semibold text-white">{item.title}</p>
+              <p className="mt-2 text-xs text-slate-500">{item.desc}</p>
+            </div>
+          ),
+        )}
       </div>
     </div>
   )

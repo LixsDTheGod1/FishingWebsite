@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
+import { getApiErrorMessage } from '../api/apiError'
 import {
   createProduct,
   deleteProduct,
@@ -54,7 +55,6 @@ export default function AdminProductsPage() {
     if (!loading && user?.role === 'Admin') {
       load().catch((e) => setError(e instanceof Error ? e.message : 'Грешка при зареждане.'))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, user?.role])
 
   if (loading) {
@@ -101,6 +101,11 @@ export default function AdminProductsPage() {
   }
 
   async function onSave() {
+    if (!form.name.trim()) {
+      setError('Моля, попълнете име на продукта.')
+      return
+    }
+
     setBusy(true)
     setError(null)
     try {
@@ -113,11 +118,7 @@ export default function AdminProductsPage() {
       await load()
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const msg =
-          (e.response?.data as any)?.detail ||
-          (e.response?.data as any)?.title ||
-          e.message
-        setError(String(msg))
+        setError(getApiErrorMessage(e, 'Неуспешна операция.'))
       } else {
         setError(e instanceof Error ? e.message : 'Неуспешна операция.')
       }
@@ -139,11 +140,7 @@ export default function AdminProductsPage() {
       await load()
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const msg =
-          (e.response?.data as any)?.detail ||
-          (e.response?.data as any)?.title ||
-          e.message
-        setError(String(msg))
+        setError(getApiErrorMessage(e, 'Неуспешно изтриване.'))
       } else {
         setError(e instanceof Error ? e.message : 'Неуспешно изтриване.')
       }
@@ -201,7 +198,7 @@ export default function AdminProductsPage() {
         </div>
       )}
 
-      <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+      <div className="mt-8 overflow-x-auto rounded-2xl border border-white/10">
         <table className="min-w-full divide-y divide-white/10">
           <thead className="bg-white/5">
             <tr>

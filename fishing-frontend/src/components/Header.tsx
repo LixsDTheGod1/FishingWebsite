@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCart } from '../hooks/useCart'
 import { useWishlist } from '../hooks/useWishlist'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
 import { setLanguage } from '../i18n'
 
 const categories = [

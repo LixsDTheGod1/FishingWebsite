@@ -1,15 +1,10 @@
-import { createContext, useCallback, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { ToastContext } from './ToastContext'
 
 type Toast = {
   id: number
   message: string
 }
-
-type ToastContextValue = {
-  showToast: (message: string) => void
-}
-
-export const ToastContext = createContext<ToastContextValue | null>(null)
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])

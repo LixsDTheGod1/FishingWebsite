@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
+import { getApiErrorMessage } from '../api/apiError'
 import {
   createFishingEvent,
   deleteFishingEvent,
@@ -88,11 +89,7 @@ export default function AdminEventsPage() {
         ),
       )
     } catch (err) {
-      const msg = axios.isAxiosError(err)
-        ? String((err.response?.data as any)?.detail || (err.response?.data as any)?.title || err.message)
-        : err instanceof Error
-          ? err.message
-          : 'Грешка при премахване.'
+      const msg = getApiErrorMessage(err, 'Грешка при премахване.')
       setParticipants((s) => ({ ...s, loading: false, error: msg }))
     }
   }
@@ -113,7 +110,6 @@ export default function AdminEventsPage() {
     if (!loading && user?.role === 'Admin') {
       load().catch((e) => setError(e instanceof Error ? e.message : 'Грешка при зареждане.'))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, user?.role])
 
   if (loading) {
@@ -165,6 +161,11 @@ export default function AdminEventsPage() {
   }
 
   async function onSave() {
+    if (!form.title.trim() || !form.location.trim()) {
+      setError('Моля, попълнете заглавие и локация.')
+      return
+    }
+
     setBusy(true)
     setError(null)
     try {
@@ -177,8 +178,7 @@ export default function AdminEventsPage() {
       await load()
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const msg = (e.response?.data as any)?.detail || (e.response?.data as any)?.title || e.message
-        setError(String(msg))
+        setError(getApiErrorMessage(e, 'Неуспешна операция.'))
       } else {
         setError(e instanceof Error ? e.message : 'Неуспешна операция.')
       }
@@ -198,8 +198,7 @@ export default function AdminEventsPage() {
       await load()
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const msg = (err.response?.data as any)?.detail || (err.response?.data as any)?.title || err.message
-        setError(String(msg))
+        setError(getApiErrorMessage(err, 'Неуспешно изтриване.'))
       } else {
         setError(err instanceof Error ? err.message : 'Неуспешно изтриване.')
       }
@@ -268,7 +267,7 @@ export default function AdminEventsPage() {
         </div>
       )}
 
-      <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+      <div className="mt-8 overflow-x-auto rounded-2xl border border-white/10">
         <table className="min-w-full divide-y divide-white/10">
           <thead className="bg-white/5">
             <tr>

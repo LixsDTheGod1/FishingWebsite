@@ -6,8 +6,9 @@ import { formatCurrency } from '../utils/format'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { createOrder } from '../api/ordersApi'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
 import { http } from '../api/http'
+import { getApiErrorMessage } from '../api/apiError'
 
 export default function CheckoutPage() {
   const { t, i18n } = useTranslation()
@@ -108,8 +109,7 @@ export default function CheckoutPage() {
       clear()
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const msg = (e.response?.data as any)?.detail || (e.response?.data as any)?.title || e.message
-        setError(String(msg))
+        setError(getApiErrorMessage(e, 'Неуспешно създаване на поръчка.'))
         return
       }
       setError(e instanceof Error ? e.message : 'Неуспешно създаване на поръчка.')

@@ -7,6 +7,7 @@ import { useToast } from '../hooks/useToast'
 import { QRCodeCanvas } from 'qrcode.react'
 import axios from 'axios'
 import EventSignupModal from '../components/EventSignupModal'
+import { getApiErrorMessage } from '../api/apiError'
 
 type Status = 'idle' | 'loading' | 'error'
 
@@ -91,10 +92,10 @@ export default function EventsPage() {
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         const msg =
-          (e.response?.data as any)?.detail ||
-          (e.response?.data as any)?.title ||
-          (e.response?.status === 401 ? 'Моля, влезте в профила си.' : e.message)
-        showToast(String(msg))
+          e.response?.status === 401
+            ? 'Моля, влезте в профила си.'
+            : getApiErrorMessage(e, 'Неуспешно записване.')
+        showToast(msg)
       } else {
         showToast('Неуспешно записване.')
       }

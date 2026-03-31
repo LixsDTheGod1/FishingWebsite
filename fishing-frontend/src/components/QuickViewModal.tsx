@@ -41,7 +41,6 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
         }
     }, [isOpen, onClose])
 
-    // КРИТИЧНО: Ако не е отворен, НЕ връщай нищо, за да не пречи на кликовете по сайта
     if (!isOpen || !currentProduct) return null
     if (typeof document === 'undefined') return null
 
@@ -66,15 +65,12 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
             className="fixed inset-0 flex items-center justify-center p-4 z-[9999]"
             onClick={onClose}
         >
-            {/* Backdrop - Задният фон е отделен, за да няма конфликти */}
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-            {/* Modal Content */}
             <div
                 className="relative bg-slate-900 w-full max-w-5xl max-h-[90vh] flex flex-col md:flex-row overflow-hidden overflow-x-hidden rounded-2xl shadow-2xl border border-white/10"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Close button */}
                 <button
                     type="button"
                     onClick={onClose}
@@ -85,7 +81,6 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                     </svg>
                 </button>
 
-                {/* Снимка */}
                 <div className="w-full md:w-1/2 h-[300px] md:h-auto bg-[#0b1b33]">
                     <img
                         src={currentProduct.image}
@@ -94,7 +89,6 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                     />
                 </div>
 
-                {/* Инфо */}
                 <div className="w-full md:w-1/2 p-6 md:p-10 overflow-y-auto overflow-x-hidden">
                     <span className="inline-block px-3 py-1 text-xs font-semibold text-turquoise bg-turquoise/10 rounded-full mb-4">
                         {currentProduct.category}
@@ -154,7 +148,6 @@ export default function QuickViewModal({ product, allProducts, isOpen, onClose }
                         </Link>
                     </div>
 
-                    {/* Related Products Section */}
                     {related.length > 0 && (
                         <div className="border-t border-white/10 pt-6">
                             <h3 className="text-sm font-bold text-white/50 uppercase tracking-wider mb-4">

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
 import { fetchAllOrders } from '../api/ordersApi'
 import type { OrderDTO } from '../api/types'
 import { formatDate, formatCurrency } from '../utils/format'
@@ -29,20 +29,20 @@ export default function AdminOrdersPage() {
     })
   }, [items, query])
 
-  async function load() {
-    setError(null)
+  async function loadOrders() {
     const data = await fetchAllOrders()
-    setItems(data)
+    return data
   }
 
   useEffect(() => {
     if (!loading && user?.role === 'Admin') {
-      setBusy(true)
-      load()
+      loadOrders()
+        .then((data) => {
+          setItems(data)
+          setError(null)
+        })
         .catch((e) => setError(e instanceof Error ? e.message : 'Грешка при зареждане.'))
-        .finally(() => setBusy(false))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, user?.role])
 
   if (loading) {
@@ -86,8 +86,12 @@ export default function AdminOrdersPage() {
           type="button"
           onClick={() => {
             setBusy(true)
-            load()
-              .catch(() => {})
+            loadOrders()
+              .then((data) => {
+                setItems(data)
+                setError(null)
+              })
+              .catch((e) => setError(e instanceof Error ? e.message : 'Грешка при зареждане.'))
               .finally(() => setBusy(false))
           }}
           className="text-sm font-medium text-slate-300 hover:text-white"

@@ -54,7 +54,7 @@ export default function ProductPage() {
     return () => {
       cancelled = true
     }
-  }, [productId])
+  }, [productId, t])
 
   if (loading) {
     return (

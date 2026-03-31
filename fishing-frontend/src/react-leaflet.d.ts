@@ -1,8 +1,12 @@
 declare module 'react-leaflet' {
   import type { ComponentType } from 'react'
 
-  export const MapContainer: ComponentType<any>
-  export const TileLayer: ComponentType<any>
-  export const Marker: ComponentType<any>
-  export const Popup: ComponentType<any>
+  type Props = {
+    children?: import('react').ReactNode
+  } & Record<string, unknown>
+
+  export const MapContainer: ComponentType<Props>
+  export const TileLayer: ComponentType<Props>
+  export const Marker: ComponentType<Props>
+  export const Popup: ComponentType<Props>
 }

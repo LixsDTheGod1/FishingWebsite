@@ -8,6 +8,24 @@ public static class SeedData
 {
     public static async Task SeedAsync(AppDbContext db, CancellationToken cancellationToken = default)
     {
+        var hasAnyRealData =
+            await db.Users.AnyAsync(cancellationToken)
+            || await db.Products.AnyAsync(cancellationToken)
+            || await db.Orders.AnyAsync(cancellationToken)
+            || await db.OrderItems.AnyAsync(cancellationToken)
+            || await db.CartItems.AnyAsync(cancellationToken)
+            || await db.Reviews.AnyAsync(cancellationToken)
+            || await db.BlogPosts.AnyAsync(cancellationToken)
+            || await db.FishingLocations.AnyAsync(cancellationToken)
+            || await db.FishingEvents.AnyAsync(cancellationToken)
+            || await db.EventRegistrations.AnyAsync(cancellationToken)
+            || await db.RefreshTokens.AnyAsync(cancellationToken);
+
+        if (hasAnyRealData)
+        {
+            return;
+        }
+
         var hasher = new PasswordHasher<User>();
 
         var author = await db.Users.FirstOrDefaultAsync(u => u.Email == "seed@grandfishing.local", cancellationToken);
