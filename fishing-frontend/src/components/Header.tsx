@@ -7,11 +7,11 @@ import { useAuth } from '../hooks/useAuth'
 import { setLanguage } from '../i18n'
 
 const categories = [
-  { label: 'Всички', query: null },
-  { label: 'Въдици', query: 'Vudici' },
-  { label: 'Макари', query: 'Makari' },
-  { label: 'Примамки', query: 'Primamki' },
-  { label: 'Аксесоари', query: 'Aksesoari' },
+  { key: 'nav.categories.all', query: null },
+  { key: 'nav.categories.rods', query: 'Vudici' },
+  { key: 'nav.categories.reels', query: 'Makari' },
+  { key: 'nav.categories.lures', query: 'Primamki' },
+  { key: 'nav.categories.accessories', query: 'Aksesoari' },
 ] as const
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
@@ -65,10 +65,10 @@ export default function Header({ onCartClick }: Props) {
             {t('nav.blog')}
           </NavLink>
           <NavLink to="/events" className={navClass}>
-            Събития
+            {t('nav.events')}
           </NavLink>
           <NavLink to="/about" className={navClass}>
-            За нас
+            {t('nav.about')}
           </NavLink>
           {user ? (
             <button
@@ -82,7 +82,7 @@ export default function Header({ onCartClick }: Props) {
               ].join(' ')}
               title={user.userName}
             >
-              {user.userName} · Изход
+              <span className="max-w-[180px] truncate">{user.userName}</span> · {t('nav.logout')}
             </button>
           ) : (
             <NavLink to="/login" className={navClass}>
@@ -129,7 +129,7 @@ export default function Header({ onCartClick }: Props) {
           <Link
             to="/wishlist"
             className="relative cursor-pointer p-2 text-white/70 hover:text-white transition-colors duration-300"
-            aria-label="Любими"
+            aria-label={t('nav.wishlist')}
           >
             <svg
               className="h-6 w-6"
@@ -187,7 +187,7 @@ export default function Header({ onCartClick }: Props) {
             className="inline-flex rounded-xl glass-dark p-2 text-white/80 md:hidden hover:text-white transition-colors duration-300"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            aria-label="Menu"
+            aria-label={t('nav.menu')}
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {open ? (
@@ -215,12 +215,12 @@ export default function Header({ onCartClick }: Props) {
           <div className="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
             {categories.map((c) => (
               <Link
-                key={c.label}
+                key={c.key}
                 to={c.query ? `/?category=${c.query}` : '/'}
                 className="rounded-full px-4 py-2 text-xs font-medium text-white/80 border border-white/10 transition-all duration-300 hover:text-white hover:border-white/20"
                 onClick={() => setOpen(false)}
               >
-                {c.label}
+                {t(c.key)}
               </Link>
             ))}
           </div>
@@ -264,10 +264,10 @@ export default function Header({ onCartClick }: Props) {
               {t('nav.blog')}
             </NavLink>
             <NavLink to="/events" className={navClass} onClick={() => setOpen(false)}>
-              Събития
+              {t('nav.events')}
             </NavLink>
             <NavLink to="/about" className={navClass} onClick={() => setOpen(false)}>
-              За нас
+              {t('nav.about')}
             </NavLink>
             {user ? (
               <button
@@ -279,7 +279,7 @@ export default function Header({ onCartClick }: Props) {
                 className={navClass({ isActive: false })}
                 title={user.userName}
               >
-                {user.userName} · Изход
+                <span className="max-w-[180px] truncate">{user.userName}</span> · {t('nav.logout')}
               </button>
             ) : (
               <NavLink to="/login" className={navClass} onClick={() => setOpen(false)}>
@@ -296,12 +296,12 @@ export default function Header({ onCartClick }: Props) {
           <div className="mt-3 flex flex-wrap gap-2">
             {categories.map((c) => (
               <Link
-                key={c.label}
+                key={c.key}
                 to={c.query ? `/?category=${c.query}` : '/'}
                 className="rounded-full px-4 py-2 text-xs font-medium text-white/80 border border-white/10 transition-all duration-300 hover:text-white hover:border-white/20"
                 onClick={() => setOpen(false)}
               >
-                {c.label}
+                {t(c.key)}
               </Link>
             ))}
           </div>

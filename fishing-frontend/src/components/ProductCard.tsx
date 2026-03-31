@@ -6,6 +6,7 @@ import QuickViewModal from './QuickViewModal'
 import ErrorBoundary from './ErrorBoundary'
 import { useWishlist } from '../hooks/useWishlist'
 import type { Product } from '../types/product'
+import { localizeDynamicText } from '../utils/localizeDynamicText'
 
 type Props = {
   product: Product
@@ -20,9 +21,9 @@ export default function ProductCard({ product, allProducts }: Props) {
   const isWishlisted = has(product.id)
 
   const stockLabel = (() => {
-    if (product.stockQuantity <= 0) return '⛔ Изчерпано'
-    if (product.stockQuantity <= 2) return `⚠️ Последни ${product.stockQuantity} бр.`
-    return '✅ В наличност'
+    if (product.stockQuantity <= 0) return t('product_card.stock.out')
+    if (product.stockQuantity <= 2) return t('product_card.stock.last', { count: product.stockQuantity })
+    return t('product_card.stock.in')
   })()
 
   const stockClass = (() => {
@@ -47,7 +48,7 @@ export default function ProductCard({ product, allProducts }: Props) {
             loading="lazy"
           />
           <span className="absolute left-4 top-4 rounded-lg px-3 py-1 text-xs font-medium text-white/80 glass">
-            {product.category}
+            {localizeDynamicText(product.category, i18n.language)}
           </span>
 
           <button
@@ -62,7 +63,7 @@ export default function ProductCard({ product, allProducts }: Props) {
               'hover:glass-dark active:scale-95',
               isWishlisted ? 'text-turquoise' : 'text-white/70 hover:text-white',
             ].join(' ')}
-            aria-label="Любими"
+            aria-label={t('nav.wishlist')}
           >
             <svg
               className={[
@@ -95,13 +96,13 @@ export default function ProductCard({ product, allProducts }: Props) {
               'opacity-100 md:opacity-0 md:group-hover:opacity-100',
             ].join(' ')}
           >
-            Бърз преглед
+            {t('product_card.quick_view')}
           </button>
         </div>
         <div className="flex flex-1 flex-col p-4 sm:p-5">
           <Link to={`/product/${product.id}`}>
             <h3 className="font-display text-xl font-bold text-white transition-colors duration-300 group-hover:text-white">
-              {product.name}
+              {localizeDynamicText(product.name, i18n.language)}
             </h3>
           </Link>
           <p className={['mt-2 text-xs font-medium', stockClass].join(' ')}>

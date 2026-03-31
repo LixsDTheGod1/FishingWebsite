@@ -40,7 +40,7 @@ export default function Profile() {
               if (!cancelled) setOrders(list)
             } catch (e) {
               if (!cancelled) {
-                setOrdersError(e instanceof Error ? e.message : 'Could not load orders.')
+                setOrdersError(e instanceof Error ? e.message : t('profile.errors.orders'))
               }
             } finally {
               if (!cancelled) setOrdersLoading(false)
@@ -53,7 +53,7 @@ export default function Profile() {
               if (!cancelled) setRegistrations(list)
             } catch (e) {
               if (!cancelled) {
-                setEventsError(e instanceof Error ? e.message : 'Could not load events.')
+                setEventsError(e instanceof Error ? e.message : t('profile.errors.events'))
               }
             } finally {
               if (!cancelled) setEventsLoading(false)
@@ -62,7 +62,7 @@ export default function Profile() {
         }
       } catch (e) {
         if (!cancelled) {
-          setError(e instanceof Error ? e.message : 'Could not load profile.')
+          setError(e instanceof Error ? e.message : t('common.error_profile'))
         }
       } finally {
         if (!cancelled) setLoading(false)
@@ -71,7 +71,7 @@ export default function Profile() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [t])
 
   if (loading) {
     return (

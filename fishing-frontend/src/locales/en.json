@@ -3,8 +3,24 @@
     "home": "Home",
     "map": "Map",
     "blog": "Blog",
+    "events": "Events",
+    "about": "About",
     "profile": "Profile",
-    "admin": "Admin"
+    "admin": "Admin",
+    "logout": "Sign out",
+    "wishlist": "Wishlist",
+    "menu": "Menu",
+    "categories": {
+      "all": "All",
+      "rods": "Rods",
+      "reels": "Reels",
+      "lures": "Lures",
+      "accessories": "Accessories"
+    }
+  },
+  "auth": {
+    "login": "Sign in",
+    "login_required": "Please sign in to your account."
   },
   "cart": {
     "title": "Shopping cart",
@@ -52,18 +68,76 @@
     "guest": "Guest",
     "not_signed": "Not signed in",
     "user_id": "User ID",
-    "member_since": "Member since"
+    "member_since": "Member since",
+    "errors": {
+      "orders": "Could not load orders.",
+      "events": "Could not load events."
+    }
   },
   "admin": {
     "title": "Admin panel",
     "desc": "Placeholder for product management, orders, and blog moderation. Wire this to your ASP.NET Core API when roles are ready.",
+    "auth_required": "You must be signed in to access the admin panel.",
+    "forbidden": "You do not have access to the admin panel.",
     "coming": "Coming soon",
     "cards": {
       "products": "Products",
       "orders": "Orders",
+      "events": "Events",
       "posts": "Blog posts",
       "users": "Users",
       "analytics": "Analytics"
+    },
+    "cards_desc": {
+      "products": "Manage products",
+      "orders": "All orders",
+      "events": "Manage events"
+    }
+  },
+  "events": {
+    "kicker": "Listings",
+    "title": "Fishing events",
+    "subtitle": "Pick a package, check remaining seats, and sign up instantly.",
+    "type": {
+      "express": "Express",
+      "adventure": "Adventure"
+    },
+    "signup": {
+      "success": "Successfully signed up!",
+      "failed": "Signup failed."
+    },
+    "status": {
+      "loading": "Loading…",
+      "error": "Could not load events.",
+      "empty": "No active events."
+    },
+    "labels": {
+      "seats": "Seats",
+      "nights": "Nights",
+      "guide": "Guide",
+      "remaining_seats": "Remaining seats",
+      "qr_ticket": "QR ticket",
+      "registration": "Registration #",
+      "user": "User",
+      "type": "Type"
+    },
+    "actions": {
+      "full": "Full",
+      "signing_up": "Signing up…",
+      "sign_up": "Sign up",
+      "close": "Close",
+      "download_ticket": "Download ticket",
+      "view_my_events": "View my events"
+    },
+    "success": {
+      "title": "Signup successful",
+      "headline": "Congratulations!",
+      "body_prefix": "You are now part of the group for"
+    },
+    "confirm": {
+      "kicker": "Confirmation",
+      "details_title": "Event details",
+      "no_details": "No additional details are available for this event."
     }
   },
   "blog": {
@@ -93,12 +167,26 @@
     "all_products": "All products",
     "account": "Account",
     "admin": "Admin panel",
+    "contacts": "Contacts",
+    "address": "15 Vitosha Blvd, Sofia",
+    "hours": "Mon–Fri: 09:00–18:00",
+    "quick_links": "Quick links",
+    "cart": "Cart",
     "privacy": "Privacy",
     "terms": "Terms",
     "contact": "Contact",
     "demo": "Demo storefront."
   },
+  "product_card": {
+    "quick_view": "Quick view",
+    "stock": {
+      "out": "⛔ Out of stock",
+      "last": "⚠️ Last {{count}} left",
+      "in": "✅ In stock"
+    }
+  },
   "common": {
+    "close": "Close",
     "error_products": "Could not load products. Is the API running?",
     "error_product": "Could not load product. Is the API running?",
     "error_blog": "Could not load blog posts. Is the API running?",

@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { FishingEventDTO } from '../api/types'
+import { useTranslation } from 'react-i18next'
+import { localizeDynamicText } from '../utils/localizeDynamicText'
 
 type Props = {
   open: boolean
@@ -10,7 +12,14 @@ type Props = {
 }
 
 export default function EventSignupModal({ open, event, busy, onClose, onConfirm }: Props) {
+  const { t, i18n } = useTranslation()
+
   if (!open || !event) return null
+
+  const typeLabel = (type: FishingEventDTO['type']) => {
+    if (type === 'Express') return t('events.type.express')
+    return t('events.type.adventure')
+  }
 
   const details = (event.description ?? event.fullDescription)?.trim()
 
@@ -21,16 +30,18 @@ export default function EventSignupModal({ open, event, busy, onClose, onConfirm
         <div className="p-6 sm:p-8">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-sm font-semibold uppercase tracking-wider text-white/60">Потвърждение</p>
-              <h3 className="mt-2 font-display text-2xl font-bold text-white">{event.title}</h3>
-              <p className="mt-2 text-white/70">{event.location} · {event.nights} нощувки · {event.type}</p>
+              <p className="text-sm font-semibold uppercase tracking-wider text-white/60">{t('events.confirm.kicker')}</p>
+              <h3 className="mt-2 font-display text-2xl font-bold text-white">{localizeDynamicText(event.title, i18n.language)}</h3>
+              <p className="mt-2 text-white/70">
+                {localizeDynamicText(event.location, i18n.language)} · {event.nights} {t('events.labels.nights').toLowerCase()} · {typeLabel(event.type)}
+              </p>
             </div>
             <button
               type="button"
               onClick={onClose}
               disabled={busy}
               className="rounded-xl p-2 text-slate-200 transition hover:bg-white/5 disabled:opacity-50"
-              aria-label="Close"
+              aria-label={t('common.close')}
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -39,9 +50,9 @@ export default function EventSignupModal({ open, event, busy, onClose, onConfirm
           </div>
 
           <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-sm font-semibold text-white">Подробности за събитието</p>
+            <p className="text-sm font-semibold text-white">{t('events.confirm.details_title')}</p>
             <p className="mt-2 text-sm leading-relaxed text-white/70">
-              {details ? details : 'Няма допълнителни подробности за това събитие.'}
+              {details ? details : t('events.confirm.no_details')}
             </p>
           </div>
 
@@ -51,7 +62,7 @@ export default function EventSignupModal({ open, event, busy, onClose, onConfirm
               className="h-11 rounded-xl border border-white/15 bg-white/5 px-4 text-sm font-bold text-white hover:bg-white/10 inline-flex items-center justify-center"
               onClick={busy ? (e) => e.preventDefault() : undefined}
             >
-              Моите събития
+              {t('events.actions.view_my_events')}
             </Link>
             <button
               type="button"
@@ -59,7 +70,7 @@ export default function EventSignupModal({ open, event, busy, onClose, onConfirm
               disabled={busy}
               className="h-11 rounded-xl bg-turquoise px-4 text-sm font-bold text-slate-950 hover:opacity-90 disabled:opacity-60"
             >
-              {busy ? 'Записване…' : 'Запиши се'}
+              {busy ? t('events.actions.signing_up') : t('events.actions.sign_up')}
             </button>
           </div>
         </div>

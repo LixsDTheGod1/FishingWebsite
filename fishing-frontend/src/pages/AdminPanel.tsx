@@ -33,13 +33,13 @@ export default function AdminPanel() {
     return (
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <h1 className="font-display text-3xl font-bold text-white">{t('admin.title')}</h1>
-        <p className="mt-3 text-slate-400">Трябва да сте влезли, за да достъпите админ панела.</p>
+        <p className="mt-3 text-slate-400">{t('admin.auth_required')}</p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link to="/login" className="rounded-xl bg-brand-600 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-500">
-            Вход
+            {t('auth.login')}
           </Link>
           <Link to="/" className="rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/5">
-            Начало
+            {t('nav.home')}
           </Link>
         </div>
       </div>
@@ -50,10 +50,10 @@ export default function AdminPanel() {
     return (
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <h1 className="font-display text-3xl font-bold text-white">{t('admin.title')}</h1>
-        <p className="mt-3 text-slate-400">Нямате права за админ панела.</p>
+        <p className="mt-3 text-slate-400">{t('admin.forbidden')}</p>
         <div className="mt-6">
           <Link to="/" className="rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/5">
-            Начало
+            {t('nav.home')}
           </Link>
         </div>
       </div>
@@ -70,21 +70,21 @@ export default function AdminPanel() {
         {[{
           key: 'products',
           title: t('admin.cards.products'),
-          desc: 'Управление на продукти',
+          desc: t('admin.cards_desc.products'),
           enabled: true,
           onSelect: () => setActive('products'),
         },
         {
           key: 'orders',
           title: t('admin.cards.orders'),
-          desc: 'Всички поръчки',
+          desc: t('admin.cards_desc.orders'),
           enabled: true,
           onSelect: () => setActive('orders'),
         },
         {
           key: 'events',
-          title: 'Събития',
-          desc: 'Управление на събития',
+          title: t('admin.cards.events'),
+          desc: t('admin.cards_desc.events'),
           enabled: true,
           onSelect: () => setActive('events'),
         },
@@ -120,7 +120,7 @@ export default function AdminPanel() {
               }}
               className="cursor-pointer rounded-2xl border border-dashed border-white/20 bg-surface-800/40 p-6 text-center transition hover:border-brand-500/40 hover:bg-white/5"
             >
-              <p className="font-display font-semibold text-white">{item.title}</p>
+              <p className="font-display font-semibold text-white break-words">{item.title}</p>
               <p className="mt-2 text-xs text-slate-500">{item.desc}</p>
             </div>
           ) : (
@@ -128,7 +128,7 @@ export default function AdminPanel() {
               key={item.key}
               className="select-none rounded-2xl border border-dashed border-white/10 bg-surface-800/20 p-6 text-center opacity-60"
             >
-              <p className="font-display font-semibold text-white">{item.title}</p>
+              <p className="font-display font-semibold text-white break-words">{item.title}</p>
               <p className="mt-2 text-xs text-slate-500">{item.desc}</p>
             </div>
           ),

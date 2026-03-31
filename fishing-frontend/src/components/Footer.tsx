@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-base font-semibold uppercase tracking-wider text-white/80">Контакти</p>
+            <p className="text-base font-semibold uppercase tracking-wider text-white/80">{t('footer.contacts')}</p>
             <ul className="mt-3 space-y-2 text-base text-white/60">
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 text-turquoise" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,53 +98,53 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                ул. Витоша 15, София
+                {t('footer.address')}
               </li>
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 text-turquoise" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Пон–Пет: 09:00–18:00
+                {t('footer.hours')}
               </li>
             </ul>
           </div>
 
           <div>
-            <p className="text-base font-semibold uppercase tracking-wider text-white/80">Бързи линкове</p>
+            <p className="text-base font-semibold uppercase tracking-wider text-white/80">{t('footer.quick_links')}</p>
             <ul className="mt-3 space-y-2 text-base text-white/60">
               <li>
                 <Link to="/" className="hover:text-turquoise transition-colors duration-300">
-                  Начало
+                  {t('nav.home')}
                 </Link>
               </li>
               <li>
                 <Link to="/locations" className="hover:text-turquoise transition-colors duration-300">
-                  Карта
+                  {t('nav.map')}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="hover:text-turquoise transition-colors duration-300">
-                  Блог
+                  {t('nav.blog')}
                 </Link>
               </li>
               <li>
                 <Link to="/events" className="hover:text-turquoise transition-colors duration-300">
-                  Събития
+                  {t('nav.events')}
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="hover:text-turquoise transition-colors duration-300">
-                  За нас
+                  {t('nav.about')}
                 </Link>
               </li>
               <li>
                 <Link to="/cart" className="hover:text-turquoise transition-colors duration-300">
-                  Количка
+                  {t('footer.cart')}
                 </Link>
               </li>
               <li>
                 <Link to="/profile" className="hover:text-turquoise transition-colors duration-300">
-                  Профил
+                  {t('nav.profile')}
                 </Link>
               </li>
             </ul>

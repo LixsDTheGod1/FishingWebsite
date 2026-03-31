@@ -6,6 +6,7 @@ import { fetchProductById } from '../api/productsApi'
 import { mapProductDto } from '../api/productMapper'
 import type { Product } from '../types/product'
 import { formatCurrency } from '../utils/format'
+import { localizeDynamicText } from '../utils/localizeDynamicText'
 
 export default function ProductPage() {
   const { t, i18n } = useTranslation()
@@ -103,7 +104,7 @@ export default function ProductPage() {
           {t('nav.home')}
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-slate-300">{product.name}</span>
+        <span className="text-slate-300">{localizeDynamicText(product.name, i18n.language)}</span>
       </nav>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-14">
@@ -116,10 +117,10 @@ export default function ProductPage() {
         </div>
         <div>
           <p className="text-sm font-medium uppercase tracking-wider text-brand-400">
-            {product.category}
+            {localizeDynamicText(product.category, i18n.language)}
           </p>
           <h1 className="mt-2 font-display text-3xl font-bold text-white sm:text-4xl">
-            {product.name}
+            {localizeDynamicText(product.name, i18n.language)}
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-300">{product.description}</p>
           <div className="mt-8 flex flex-wrap items-baseline gap-4">
