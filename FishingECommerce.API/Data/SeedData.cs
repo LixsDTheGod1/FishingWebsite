@@ -8,6 +8,8 @@ public static class SeedData
 {
     public static async Task SeedAsync(AppDbContext db, CancellationToken cancellationToken = default)
     {
+        var hasher = new PasswordHasher<User>();
+
         var hasAnyRealData =
             await db.Users.AnyAsync(cancellationToken)
             || await db.Products.AnyAsync(cancellationToken)
@@ -21,12 +23,12 @@ public static class SeedData
             || await db.EventRegistrations.AnyAsync(cancellationToken)
             || await db.RefreshTokens.AnyAsync(cancellationToken);
 
+        await EnsureAdminAsync(db, hasher, cancellationToken);
+
         if (hasAnyRealData)
         {
             return;
         }
-
-        var hasher = new PasswordHasher<User>();
 
         var author = await db.Users.FirstOrDefaultAsync(u => u.Email == "seed@grandfishing.local", cancellationToken);
         if (author is null)
@@ -486,5 +488,49 @@ public static class SeedData
         }
 
         await db.SaveChangesAsync(cancellationToken);
+    }
+
+    private static async Task EnsureAdminAsync(AppDbContext db, PasswordHasher<User> hasher, CancellationToken cancellationToken)
+    {
+        const string adminEmail = "admin@abv.bg";
+        const string adminPassword = "admin";
+
+        var admin = await db.Users.FirstOrDefaultAsync(u => u.Email == adminEmail, cancellationToken);
+        if (admin is null)
+        {
+            admin = new User
+            {
+                Email = adminEmail,
+                UserName = "Admin",
+                Role = "Admin",
+                PasswordHash = string.Empty,
+                CreatedAtUtc = DateTime.UtcNow,
+            };
+
+            admin.PasswordHash = hasher.HashPassword(admin, adminPassword);
+            db.Users.Add(admin);
+            await db.SaveChangesAsync(cancellationToken);
+            return;
+        }
+
+        var changed = false;
+
+        if (admin.Role != "Admin")
+        {
+            admin.Role = "Admin";
+            changed = true;
+        }
+
+        if (string.IsNullOrWhiteSpace(admin.PasswordHash)
+            || hasher.VerifyHashedPassword(admin, admin.PasswordHash, adminPassword) == PasswordVerificationResult.Failed)
+        {
+            admin.PasswordHash = hasher.HashPassword(admin, adminPassword);
+            changed = true;
+        }
+
+        if (changed)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
     }
 }
