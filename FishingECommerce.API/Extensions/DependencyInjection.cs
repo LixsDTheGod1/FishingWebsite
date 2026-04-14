@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using FishingECommerce.API.Data;
 using FishingECommerce.API.Entities;
 using FishingECommerce.API.Options;
@@ -14,11 +14,14 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddFishingECommerce(this IServiceCollection services, IConfiguration configuration)
     {
+        // Swagger
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
+        // Controllers
         services.AddControllers();
 
+        // CORS – важно за връзката с фронтенда
         services.AddCors(options =>
         {
             options.AddPolicy("Frontend", policy =>
@@ -29,21 +32,26 @@ public static class DependencyInjection
                         "http://localhost:4173",
                         "http://127.0.0.1:4173")
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .AllowCredentials();
             });
         });
 
+        // Database
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+        // JWT Settings
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
+        // Services
         services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IOrderService, OrderService>();
 
+        // JWT Authentication
         var jwtSettings = configuration.GetSection(JwtSettings.SectionName).Get<JwtSettings>()
             ?? throw new InvalidOperationException($"Missing or invalid '{JwtSettings.SectionName}' configuration.");
 
